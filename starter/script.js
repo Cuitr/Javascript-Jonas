@@ -21,12 +21,13 @@ const current1El = document.getElementById(`current--1`);
 let currentScore = 0;
 let actingPlayer = 0;// 0 is stand for player 1 and 1 is for player 2
 const scores = [0, 0];//total score
+
 const switchPlayer = function(){
     player0El.classList.toggle(`player--active`);
     player1El.classList.toggle(`player--active`);
     document.getElementById(`current--${actingPlayer}`).textContent = 0;
     actingPlayer = actingPlayer === 0 ? 1 : 0;
-    currentScore = randomNum;
+    currentScore = 0;
 }
 /* Set beginning display */
     score0El.textContent = 0;
@@ -75,10 +76,11 @@ const randomDice = function(){
    /*--Jonas approach-- 😍*/ 
    image.src = `dice-${randomNum}.png`;
     if(randomNum !== 1){
-        currentScore = randomNum;
+        currentScore += randomNum;
+        scores[actingPlayer] += randomNum;
         document.getElementById(`current--${actingPlayer}`).textContent = currentScore;
-        scores[actingPlayer] += currentScore;
-        document.getElementById(`score--${actingPlayer}`).textContent = scores[actingPlayer];
+        
+        
 }else{//switch the player (randomNum == 1)
    /* document.getElementById(`current--${actingPlayer}`).textContent = 0;
 
@@ -96,6 +98,7 @@ const randomDice = function(){
     */
 
     /*.toggle WILL ADD THE CLASS IF IT WASN'T THERE AND IF IT WAS THERE, IT WILL BE REMOVED */
+    document.getElementById(`score--${actingPlayer}`).textContent = scores[actingPlayer];
     switchPlayer();
     
 }
@@ -104,6 +107,7 @@ const randomDice = function(){
 /*---Set function for HOLD click event---*/
 const holdScore = function(){
     image.classList.add(`hidden`);// hidden the dice every switch event
+    document.getElementById(`score--${actingPlayer}`).textContent = scores[actingPlayer];
     switchPlayer();
 }
 document.querySelector(`.btn--roll`).addEventListener(`click`, randomDice);
