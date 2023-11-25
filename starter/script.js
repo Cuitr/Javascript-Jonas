@@ -36,6 +36,7 @@ document.querySelector(`.btn--new`).addEventListener(`click`, function(){
     current0El.textContent = 0;
     current1El.textContent = 0;
     currentScore = 0;
+    scores = [0, 0];
 })
 /*---Set function for ROLL RICE click event--- */
 const randomDice = function(){
@@ -67,25 +68,35 @@ const randomDice = function(){
    /*--Jonas approach-- 😍*/ 
    image.src = `dice-${randomNum}.png`;
     if(randomNum !== 1){
-        currentScore += randomNum;
+        currentScore = randomNum;
         document.getElementById(`current--${actingPlayer}`).textContent = currentScore;
+        scores[actingPlayer] += currentScore;
+        document.getElementById(`score--${actingPlayer}`).textContent = scores[actingPlayer];
 }else{//switch the player (randomNum == 1)
     document.getElementById(`current--${actingPlayer}`).textContent = 0;
     actingPlayer = actingPlayer === 0 ? 1 : 0;
     /* the current player is 1 which stand for 0 value. if randomNum == 1, then actingPlayer will have the value of 1 which is player 2
      */
     //randumNum == 1: actingPlayer == 0 -> reasigned actingPlayer == 1
-     currentScore = 0;
+    currentScore = randomNum;
+    
+    document.getElementById(`score--${actingPlayer}`).textContent = scores[actingPlayer];
     player0El.classList.toggle(`player--active`);
-    /*.toggle WILL ADD TH CLASS IF IT WASN'T THERE AND IF IT WAS THERE, IT WILL BE REMOVED */
     player1El.classList.toggle(`player--active`);
+    /*.toggle WILL ADD THE CLASS IF IT WASN'T THERE AND IF IT WAS THERE, IT WILL BE REMOVED */
 }
 }
 
 /*---Set function for HOLD click event---*/
-
-
-
+const holdScore = function(){
+    actingPlayer = actingPlayer === 0 ? 1 : 0;  
+    // When the hold button was click, if actingPlayer was 0 then switch to 1 and vice versa
+    player0El.classList.toggle(`player--active`); 
+    player1El.classList.toggle(`player--active`);
+    image.classList.add(`hidden`);// hidden the dice every switch event
+    document.getElementById(`current--${actingPlayer === 1 ? 0 : 1}`).textContent = 0;
+    // Display 0 in the current of the other actingPlayer when switch player
+}
 
 document.querySelector(`.btn--roll`).addEventListener(`click`, randomDice);
 document.querySelector(`.btn--hold`).addEventListener(`click`, holdScore);
