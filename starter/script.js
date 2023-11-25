@@ -21,6 +21,13 @@ const current1El = document.getElementById(`current--1`);
 let currentScore = 0;
 let actingPlayer = 0;// 0 is stand for player 1 and 1 is for player 2
 const scores = [0, 0];//total score
+const switchPlayer = function(){
+    player0El.classList.toggle(`player--active`);
+    player1El.classList.toggle(`player--active`);
+    document.getElementById(`current--${actingPlayer}`).textContent = 0;
+    actingPlayer = actingPlayer === 0 ? 1 : 0;
+    currentScore = randomNum;
+}
 /* Set beginning display */
     score0El.textContent = 0;
     score1El.textContent = 0;
@@ -73,31 +80,32 @@ const randomDice = function(){
         scores[actingPlayer] += currentScore;
         document.getElementById(`score--${actingPlayer}`).textContent = scores[actingPlayer];
 }else{//switch the player (randomNum == 1)
-    document.getElementById(`current--${actingPlayer}`).textContent = 0;
+   /* document.getElementById(`current--${actingPlayer}`).textContent = 0;
+
     actingPlayer = actingPlayer === 0 ? 1 : 0;
-    /* the current player is 1 which stand for 0 value. if randomNum == 1, then actingPlayer will have the value of 1 which is player 2
-     */
-    //randumNum == 1: actingPlayer == 0 -> reasigned actingPlayer == 1
+
+    // The current player is 1 which stand for 0 value. if randomNum == 1, then actingPlayer will have the value of 1 which is player 2
+     
+    // RandumNum == 1: actingPlayer == 0 -> reasigned actingPlayer == 1
     currentScore = randomNum;
     
-    document.getElementById(`score--${actingPlayer}`).textContent = scores[actingPlayer];
     player0El.classList.toggle(`player--active`);
     player1El.classList.toggle(`player--active`);
+
+    //toggle WILL ADD THE CLASS IF IT WASN'T THERE AND IF IT WAS THERE, IT WILL BE REMOVED 
+    */
+
     /*.toggle WILL ADD THE CLASS IF IT WASN'T THERE AND IF IT WAS THERE, IT WILL BE REMOVED */
+    switchPlayer();
+    
 }
 }
 
 /*---Set function for HOLD click event---*/
 const holdScore = function(){
-    actingPlayer = actingPlayer === 0 ? 1 : 0;  
-    // When the hold button was click, if actingPlayer was 0 then switch to 1 and vice versa
-    player0El.classList.toggle(`player--active`); 
-    player1El.classList.toggle(`player--active`);
     image.classList.add(`hidden`);// hidden the dice every switch event
-    document.getElementById(`current--${actingPlayer === 1 ? 0 : 1}`).textContent = 0;
-    // Display 0 in the current of the other actingPlayer when switch player
+    switchPlayer();
 }
-
 document.querySelector(`.btn--roll`).addEventListener(`click`, randomDice);
 document.querySelector(`.btn--hold`).addEventListener(`click`, holdScore);
 
