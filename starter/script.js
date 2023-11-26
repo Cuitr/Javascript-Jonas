@@ -120,7 +120,7 @@ const holdScore = function(){
     scores[actingPlayer] += currentScore;
     document.getElementById(`score--${actingPlayer}`).textContent = scores[actingPlayer];
     if(scores[actingPlayer] >= 10){
-        playing = false;
+        playing = false;//Reasign the state of the game to false so when we find the winner, any button of the game excluding "new game" button won't be used
         document.querySelector(`.player--${actingPlayer}`).classList.add(`player--winner`);
         document.querySelector(`.player--${actingPlayer}`).classList.remove(`player--active`);
         image.classList.add(`hidden`);
