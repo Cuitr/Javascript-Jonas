@@ -21,7 +21,7 @@ const current1El = document.getElementById(`current--1`);
 let currentScore = 0;
 let actingPlayer = 0;// 0 is stand for player 1 and 1 is for player 2
 let scores = [0, 0];//total score
-let playing = true;
+let playing = true;// the state of the game
 
 const switchPlayer = function(){
     player0El.classList.toggle(`player--active`);
@@ -58,7 +58,7 @@ document.querySelector(`.btn--new`).addEventListener(`click`, function(){
 });
 /*---Set function for ROLL RICE click event--- */
 const randomDice = function(){
-    if(playing){
+    if(playing){// if the game was finish, then playing value is 0 (false) and all the code inside the if block will not be executed
     const randomNum = Math.trunc(Math.random()*6 + 1);
     image.classList.remove(`hidden`);
     /*
@@ -115,7 +115,7 @@ const randomDice = function(){
 
 /*---Set function for HOLD click event---*/
 const holdScore = function(){
-    if(playing){
+    if(playing){// if the game was finish, then playing value is 0 (false) and all the code inside the if block will not be executed
     image.classList.add(`hidden`);// hidden the dice every switch event
     scores[actingPlayer] += currentScore;
     document.getElementById(`score--${actingPlayer}`).textContent = scores[actingPlayer];
