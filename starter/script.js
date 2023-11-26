@@ -21,6 +21,7 @@ const current1El = document.getElementById(`current--1`);
 let currentScore = 0;
 let actingPlayer = 0;// 0 is stand for player 1 and 1 is for player 2
 let scores = [0, 0];//total score
+let playing = true;
 
 const switchPlayer = function(){
     player0El.classList.toggle(`player--active`);
@@ -38,6 +39,14 @@ const switchPlayer = function(){
     currentScore = 0;
     /*---Set NEW GAME click event--- */
 document.querySelector(`.btn--new`).addEventListener(`click`, function(){
+    playing = true;
+    if(actingPlayer == 1){
+        actingPlayer == 0;
+        player0El.classList.toggle(`player--active`);
+        player1El.classList.toggle(`player--active`);
+    }
+    document.querySelector(`.player--0`).classList.remove(`player--winner`);
+    document.querySelector(`.player--1`).classList.remove(`player--winner`);
     score0El.textContent = 0;
     score1El.textContent = 0;
     image.classList.add(`hidden`);// we need to add a .hidden class on the css file first
@@ -49,6 +58,7 @@ document.querySelector(`.btn--new`).addEventListener(`click`, function(){
 });
 /*---Set function for ROLL RICE click event--- */
 const randomDice = function(){
+    if(playing){
     const randomNum = Math.trunc(Math.random()*6 + 1);
     image.classList.remove(`hidden`);
     /*
@@ -101,13 +111,23 @@ const randomDice = function(){
     
 }
 }
+}
 
 /*---Set function for HOLD click event---*/
 const holdScore = function(){
+    if(playing){
     image.classList.add(`hidden`);// hidden the dice every switch event
     scores[actingPlayer] += currentScore;
     document.getElementById(`score--${actingPlayer}`).textContent = scores[actingPlayer];
+    if(scores[actingPlayer] >= 10){
+        playing = false;
+        document.querySelector(`.player--${actingPlayer}`).classList.add(`player--winner`);
+        document.querySelector(`.player--${actingPlayer}`).classList.remove(`player--active`);
+        image.classList.add(`hidden`);
+    }else{
     switchPlayer();
+    }
+}
 }
 document.querySelector(`.btn--roll`).addEventListener(`click`, randomDice);
 document.querySelector(`.btn--hold`).addEventListener(`click`, holdScore);
