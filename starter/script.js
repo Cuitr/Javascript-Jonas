@@ -20,7 +20,7 @@ const current1El = document.getElementById(`current--1`);
 /* Set value for current score, total score of 2 player and switch player */
 let currentScore = 0;
 let actingPlayer = 0;// 0 is stand for player 1 and 1 is for player 2
-const scores = [0, 0];//total score
+let scores = [0, 0];//total score
 
 const switchPlayer = function(){
     player0El.classList.toggle(`player--active`);
@@ -43,9 +43,10 @@ document.querySelector(`.btn--new`).addEventListener(`click`, function(){
     image.classList.add(`hidden`);// we need to add a .hidden class on the css file first
     current0El.textContent = 0;
     current1El.textContent = 0;
+    actingPlayer = 0;
     currentScore = 0;
     scores = [0, 0];
-})
+});
 /*---Set function for ROLL RICE click event--- */
 const randomDice = function(){
     const randomNum = Math.trunc(Math.random()*6 + 1);
@@ -96,8 +97,7 @@ const randomDice = function(){
 
     //toggle WILL ADD THE CLASS IF IT WASN'T THERE AND IF IT WAS THERE, IT WILL BE REMOVED 
     */
-
-    /*.toggle WILL ADD THE CLASS IF IT WASN'T THERE AND IF IT WAS THERE, IT WILL BE REMOVED */
+    scores[actingPlayer] = 0;
     document.getElementById(`score--${actingPlayer}`).textContent = scores[actingPlayer];
     switchPlayer();
     
