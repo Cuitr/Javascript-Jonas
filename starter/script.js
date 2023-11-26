@@ -78,7 +78,6 @@ const randomDice = function(){
    image.src = `dice-${randomNum}.png`;
     if(randomNum !== 1){
         currentScore += randomNum;
-        scores[actingPlayer] += randomNum;
         document.getElementById(`current--${actingPlayer}`).textContent = currentScore;
         
         
@@ -97,7 +96,6 @@ const randomDice = function(){
 
     //toggle WILL ADD THE CLASS IF IT WASN'T THERE AND IF IT WAS THERE, IT WILL BE REMOVED 
     */
-    scores[actingPlayer] = 0;
     document.getElementById(`score--${actingPlayer}`).textContent = scores[actingPlayer];
     switchPlayer();
     
@@ -107,6 +105,7 @@ const randomDice = function(){
 /*---Set function for HOLD click event---*/
 const holdScore = function(){
     image.classList.add(`hidden`);// hidden the dice every switch event
+    scores[actingPlayer] += currentScore;
     document.getElementById(`score--${actingPlayer}`).textContent = scores[actingPlayer];
     switchPlayer();
 }
