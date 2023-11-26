@@ -30,23 +30,13 @@ const switchPlayer = function(){
     actingPlayer = actingPlayer === 0 ? 1 : 0;
     currentScore = 0;
 }
-/* Set beginning display */
-    score0El.textContent = 0;
-    score1El.textContent = 0;
-    image.classList.add(`hidden`);
-    current0El.textContent = 0;
-    current1El.textContent = 0;
-    currentScore = 0;
-    /*---Set NEW GAME click event--- */
-document.querySelector(`.btn--new`).addEventListener(`click`, function(){
+    /*---Set NEW GAME click event function as well as the biginning of the game when the page is fully loaded--- */
+const newGame =  function(){
     playing = true;
-    if(actingPlayer == 1){
-        actingPlayer == 0;
-        player0El.classList.toggle(`player--active`);
-        player1El.classList.toggle(`player--active`);
-    }
-    document.querySelector(`.player--0`).classList.remove(`player--winner`);
-    document.querySelector(`.player--1`).classList.remove(`player--winner`);
+    player0El.classList.add(`player--active`);
+    player1El.classList.remove(`player--active`);
+    player0El.classList.remove(`player--winner`);
+    player1El.classList.remove(`player--winner`);
     score0El.textContent = 0;
     score1El.textContent = 0;
     image.classList.add(`hidden`);// we need to add a .hidden class on the css file first
@@ -55,7 +45,7 @@ document.querySelector(`.btn--new`).addEventListener(`click`, function(){
     actingPlayer = 0;
     currentScore = 0;
     scores = [0, 0];
-});
+};
 /*---Set function for ROLL RICE click event--- */
 const randomDice = function(){
     if(playing){// if the game was finish, then playing value is 0 (false) and all the code inside the if block will not be executed
@@ -108,7 +98,6 @@ const randomDice = function(){
     */
     document.getElementById(`score--${actingPlayer}`).textContent = scores[actingPlayer];
     switchPlayer();
-    
 }
 }
 }
@@ -119,7 +108,7 @@ const holdScore = function(){
     image.classList.add(`hidden`);// hidden the dice every switch event
     scores[actingPlayer] += currentScore;
     document.getElementById(`score--${actingPlayer}`).textContent = scores[actingPlayer];
-    if(scores[actingPlayer] >= 10){
+    if(scores[actingPlayer] >= 100){
         playing = false;//Reasign the state of the game to false so when we find the winner, any button of the game excluding "new game" button won't be used
         document.querySelector(`.player--${actingPlayer}`).classList.add(`player--winner`);
         document.querySelector(`.player--${actingPlayer}`).classList.remove(`player--active`);
@@ -131,4 +120,5 @@ const holdScore = function(){
 }
 document.querySelector(`.btn--roll`).addEventListener(`click`, randomDice);
 document.querySelector(`.btn--hold`).addEventListener(`click`, holdScore);
-
+document.querySelector(`.btn--new`).addEventListener(`click`, newGame);
+window.onload(newGame());
